@@ -2,9 +2,9 @@
 
 class Person {
 private:
-    string Name;
-    string Address;
-    string Email;
+    std::string Name;
+    std::string Address;
+    std::string Email;
 };
 
 class Librarian : public Person{
@@ -15,8 +15,8 @@ private:
 
 class Member : public Person{
 private:
-    int memberid
-    std::vector<Book> booksborrowed;
+    int memberid;
+    //std::vector<Book> booksborrowed;
 };
 
 int main(){
