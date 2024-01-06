@@ -5,6 +5,27 @@ private:
     std::string Name;
     std::string Address;
     std::string Email;
+
+    public:
+
+    void setName(std::string name){
+        Name = name;
+    }
+    std::string getName(){
+        return Name;
+    }
+    void setAddress(std::string address){
+        Address = address;
+    }
+    std::string getAddress(){
+        return Address;
+    }
+    void setEmail(std::string email){
+        Email = email;
+    }
+    std::string getEmail(){
+        return Email;
+    }
 };
 
 class Librarian : public Person{
