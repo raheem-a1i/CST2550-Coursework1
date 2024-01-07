@@ -7,7 +7,6 @@ private:
     std::string Email;
 
     public:
-
     void setName(std::string name){
         Name = name;
     }
@@ -30,44 +29,73 @@ private:
 
 class Librarian : public Person{
 private:
-    int staffid;
-    int salary;
+    int StaffId;
+    int Salary;
+
+    public:
+
+
+    void addMenber() {
+
+    }
+    void issueBook(int memberID, int bookID){
+
+    }
+    void returnBook(int memberID, int bookID){
+
+    }
+    void displayBorrowedBook(int memberID){
+
+    }
+    void calcFine(int memberID){
+        
+    }
+    void setstaffid(int staffid){
+        StaffId = staffid;
+    }
+    int getstaffid(){
+        return StaffId;
+    }
+    void setsalary(int salary){
+        Salary = salary;
+    }
+    int getsalary(){
+        return Salary;
+    }
 };
 
 class Member : public Person{
 private:
     int memberid;
-    //std::vector<Book> booksborrowed;
 };
 
 int main(){
-    int number = 0;
+    int choice = 0;
 
-    std::cout << "Librarian login\n";
-    std::cout << "1. Login\n";
-    std::cout << "2. Signup\n";
-    std::cin >> number;
-    if (number == 1){
-        std::cout << "Login\n";
+    do{
+        std::cout << "Librarian login\n";
+        std::cout << "1. Login\n";
+        std::cout << "2. Signup\n";
+        std::cout << "3. Exit\n";
+        std::cin >> choice;
 
-        std::cout << "Enter your staff id:\n";
+        switch (choice){
+            case 1:
+            std::cout << "Login --";
+            break;
 
-        std::cout << "Enter your password:\n";
-    }
-    else if (number == 2){
-        std::cout << "Enter your name:\n";
+            case 2:
+            std::cout << "Signup --";
+            break;
 
-        std::cout << "Enter your address:\n";
+            case 3:
+            std::cout << "Exiting . . .";
+            break;
 
-        std::cout << "Enter your email:\n";
-
-        std::cout << "Enter your staff id:\n";
-
-        std::cout << "Enter your password:\n";
-
-        std::cout << "Enter your salary:\n";
-    }else{
-        std::cout << "Invaild input\n";
-    }
+            default:
+            std::cout << "Invalid \n";
+        }
+    } while (choice != 3);
+    
     return 0;
 }
