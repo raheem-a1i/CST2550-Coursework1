@@ -1,0 +1,12 @@
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic
+
+library: main.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+main.o: main.cpp classes.h
+	$(CXX) $(CXXFLAGS) -c $<
+
+.PHONY: clean
+clean:
+	$(RM) *.o library
