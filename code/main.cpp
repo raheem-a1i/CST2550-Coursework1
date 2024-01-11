@@ -2,21 +2,23 @@
 #include <vector>
 #include "classes.h"
 
-int main(){
+int main()
+{
     int choice;
     int choice1;
     int num1;
     bool found = false;
-    
-    const int max_librarian = 5; // Maximum number of librarians
-    Librarian* librarians[max_librarian]; // Array to store librarians
+
+    const int max_librarian = 5;          // Maximum number of librarians
+    Librarian *librarians[max_librarian]; // Array to store librarians
     int librariancount = 0;
 
     std::string name;
     std::string address;
     std::string email;
 
-    do{
+    do
+    {
         std::cout << "Librarian login\n";
         std::cout << "1. Signup\n";
         std::cout << "2. Login\n";
@@ -24,7 +26,8 @@ int main(){
         std::cout << "Enter choice: ";
         std::cin >> choice;
 
-        switch (choice){
+        switch (choice)
+        {
         case 1:
             int StaffID, salary;
 
@@ -60,29 +63,36 @@ int main(){
                     found = true;
                     std::cout << "Login successful\n";
 
-                    std::cout << "1. Add a Member\n";
-                    std::cout << "2. Issue a book\n";
-                    std::cout << "3. Return a book\n";
-                    std::cout << "4. Display all books borrowed\n";
-                    std::cout << "5. Logout\n";
-                    std::cout << "Enter choice: ";
-                    std::cin >> choice1;
+                    do{
+                        std::cout << "-------- Library ---------";
+                        std::cout << "1. Add a Member\n";
+                        std::cout << "2. Issue a book\n";
+                        std::cout << "3. Return a book\n";
+                        std::cout << "4. Display all books borrowed\n";
+                        std::cout << "5. Logout\n";
+                        std::cout << "Enter choice: ";
+                        std::cin >> choice1;
 
-                    switch (choice1){
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    
-                    default:
-                        break;
-                    }
+                        switch (choice1)
+                        {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            std::cout << "Logging Out. \n";
+                            break;
+                        default:
+                            std::cout << "Invaild choice. \n";
+                            break;
+                        }
+
+                    } while (choice1 != 5);
+
                     break;
                 }
             }

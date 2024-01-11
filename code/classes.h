@@ -4,8 +4,13 @@
 #include <vector>
 #include <string>
 
+struct Date {
+    int month;
+    int day;
+    int year;
+};
+
 class Book;
-class Date;
 
 class Person {
 private:
@@ -14,6 +19,12 @@ private:
     std::string Email;
 
     public:
+    Person() {}
+    Person(std::string name, std::string address, std::string email){
+        Name = name;
+        Address = address;
+        Email = email;
+    }
     void setName(std::string name){
         Name = name;
     }
@@ -82,7 +93,7 @@ private:
 class Member : public Person{
 private:
     int memberID;
-    std::vector<class ::Book> booksloaned;
+    std::vector<Book> booksloaned;
 
 public:
     Member(int memberID, std::string name, std::string address, std::string email){
@@ -96,11 +107,13 @@ public:
         return memberID;
     }
 
-    std::vector<class::Book> getBooksBorrowed() {
+    std::vector<Book> getBooksBorrowed() {
         return booksloaned;
     }
 
-    void setBooksBorrowed(Book book);
+    void setBooksBorrowed(Book &b){
+        booksloaned.push_back(b);
+    }
 };
 
 class Book{
@@ -151,35 +164,5 @@ class Book{
 
 };
 
-class Date {
-private:
-    int day;
-    int month;
-    int year;
-
-public:
-    Date(int day, int month, int year) : day(day), month(month), year(year) {}
-    void setDay(int day) {
-        this->day = day;
-    }
-    void setMonth(int month) {
-        this->month = month;
-    }
-    void setYear(int year) {
-        this->year = year;
-    }
-    int getDay() const {
-        return day;
-    }
-    int getMonth() const {
-        return month;
-    }
-    int getYear() const {
-        return year;
-    }
-    void displayDate() const {
-        std::cout << year << "/" << month << "/" << day << "\n";
-    }
-};
 
 #endif
