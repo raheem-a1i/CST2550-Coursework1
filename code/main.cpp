@@ -62,9 +62,11 @@ int main()
                 {
                     found = true;
                     std::cout << "Login successful\n";
+                    std::string name, address, email;
 
-                    do{
-                        std::cout << "-------- Library ---------";
+                    do
+                    {
+                        std::cout << "-------- Library ---------\n";
                         std::cout << "1. Add a Member\n";
                         std::cout << "2. Issue a book\n";
                         std::cout << "3. Return a book\n";
@@ -76,12 +78,55 @@ int main()
                         switch (choice1)
                         {
                         case 1:
+                            int memberID;
+                            std::cout << "Enter Member ID: ";
+                            std::cin >> memberID;
+                            std::cout << "Enter Name: ";
+                            std::cin >> name;
+                            std::cout << "Enter Address: ";
+                            std::cin >> address;
+                            std::cout << "Enter Email: ";
+                            std::cin >> email;
+                            //
+                            //
+                            //
+                            //
                             break;
                         case 2:
+                            int memberID;
+                            int bookID;
+                            std::cout << "Enter Member ID: ";
+                            std::cin >> memberID;
+                            std::cout << "Select Book to Issue (Enter Book ID): ";
+                            std::cin >> bookID;
+                            //
+                            //
+                            //
+                            //
                             break;
                         case 3:
+                            int memberID;
+                            int bookID;
+                            std::cout << "Enter Member ID: ";
+                            std::cin >> memberID;
+                            std::cout << "Select Book to Issue (Enter Book ID): ";
+                            std::cin >> bookID;
+                            //
+                            //
+                            //
+                            //
+                            //
                             break;
                         case 4:
+                            int memberID;
+                            std::cout << "Enter Member ID: ";
+                            std::cin >> memberID;
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
                             break;
                         case 5:
                             std::cout << "Logging Out. \n";
