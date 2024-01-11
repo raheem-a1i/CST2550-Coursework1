@@ -1,159 +1,10 @@
 #include <iostream>
 #include <vector>
-
-
-class Person {
-private:
-    std::string Name;
-    std::string Address;
-    std::string Email;
-
-    public:
-    void setName(std::string name){
-        Name = name;
-    }
-    std::string getName(){
-        return Name;
-    }
-    void setAddress(std::string address){
-        Address = address;
-    }
-    std::string getAddress(){
-        return Address;
-    }
-    void setEmail(std::string email){
-        Email = email;
-    }
-    std::string getEmail(){
-        return Email;
-    }
-};
-
-class Librarian : public Person{
-private:
-    int StaffId;
-    int Salary;
-
-    public:
-    Librarian() {}
-
-    Librarian(int StaffId, std::string Name, std::string Address, std::string Email, int Salary){
-        setName(Name);
-        setAddress(Address);
-        setEmail(Email);
-        this->StaffId = StaffId;
-        this->Salary = Salary;
-    }
-
-    void addMenber() {
-
-    }
-    void issueBook(int memberID, int bookID){
-
-    }
-    void returnBook(int memberID, int bookID){
-
-    }
-    void displayBorrowedBook(int memberID){
-
-    }
-    void calcFine(int memberID){
-        
-    }
-    void setstaffid(int staffid){
-        StaffId = staffid;
-    }
-    int getstaffid(){
-        return StaffId;
-    }
-    void setsalary(int salary){
-        Salary = salary;
-    }
-    int getsalary(){
-        return Salary;
-    }
-};
-
-class Member : public Person{
-private:
-    int memberID;
-    std::vector<class ::Book> booksloaned;
-
-public:
-    Member(int memberID, std::string name, std::string address, std::string email){
-        setName(name);
-        setAddress(address);
-        setEmail(email);
-        this->memberID = memberID;
-    }
-
-    int getMemberID(){
-        return memberID;
-    }
-
-    std::vector<class::Book> getBooksBorrowed() {
-        return booksloaned;
-    }
-
-    void setBooksBorrowed(Book book) {
-        booksloaned = {book}; 
-    }
-};
-
-class Book{
-    private:
-    int bookID;
-    std::string bookName;
-    std::string authorFirstName;
-    std::string authorLastName;
-    std::string bookType;
-    Date dueDate;
-    Member *borrower;
-
-    public:
-    Book(int bookID, std::string bookName, std::string authorFirstName, std::string authorLastName)
-        : bookID(bookID), bookName(bookName), authorFirstName(authorFirstName), authorLastName(authorLastName), borrower(nullptr) {}
-
-    int getbookID(){
-        return bookID;
-    }
-
-    std::string getbookName(){
-        return bookName;
-    }
-
-    std::string getauthorFirstName(){
-        return authorFirstName;
-    }
-
-    std::string getauthorLastName(){
-        return authorLastName;
-    }
-
-    Date getDueDate() {
-        return dueDate;
-    }
-
-    void setDueDate(Date newDueDate) {
-        dueDate = newDueDate;
-    }
-
-    void returnBook(){
-
-    }
-
-    void borrowBook(Member &member, Date newDueDate){
-        
-    }
-
-};
-
-class Date{
-
-};
+#include "classes.h"
 
 int main(){
     int choice;
+    int choice1;
     int num1;
     bool found = false;
     
@@ -170,6 +21,7 @@ int main(){
         std::cout << "1. Signup\n";
         std::cout << "2. Login\n";
         std::cout << "3. Exit\n";
+        std::cout << "Enter choice: ";
         std::cin >> choice;
 
         switch (choice){
@@ -207,6 +59,30 @@ int main(){
                 {
                     found = true;
                     std::cout << "Login successful\n";
+
+                    std::cout << "1. Add a Member\n";
+                    std::cout << "2. Issue a book\n";
+                    std::cout << "3. Return a book\n";
+                    std::cout << "4. Display all books borrowed\n";
+                    std::cout << "5. Logout\n";
+                    std::cout << "Enter choice: ";
+                    std::cin >> choice1;
+
+                    switch (choice1){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    
+                    default:
+                        break;
+                    }
                     break;
                 }
             }
