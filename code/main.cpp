@@ -37,6 +37,9 @@ int main()
 
     std::cout << "Librarian signed up successfully!\n";
 
+    int memberID;
+    int bookID;
+
     do
     {
         std::cout << "-------- Library ---------\n";
@@ -50,8 +53,7 @@ int main()
 
         switch (choice1)
         {
-        case 1:
-            int memberID;
+        case 1:{
             std::cout << "Enter Member ID: ";
             std::cin >> memberID;
             std::cout << "Enter Name: ";
@@ -64,9 +66,8 @@ int main()
             Member *newMember = librarian.addMember(memberID, name, address, email);
             std::cout << "Member added successfully!\n";
             break;
+        }
         case 2:
-            int memberID;
-            int bookID;
             std::cout << "Enter Member ID: ";
             std::cin >> memberID;
             std::cout << "Select Book to Issue (Enter Book ID): ";
@@ -87,8 +88,6 @@ int main()
             }
             break;
         case 3:
-            int memberID;
-            int bookID;
             std::cout << "Enter Member ID: ";
             std::cin >> memberID;
             std::cout << "Select Book to Issue (Enter Book ID): ";
@@ -104,7 +103,6 @@ int main()
             }
             break;
         case 4:
-            int memberID;
             std::cout << "Enter Member ID: ";
             std::cin >> memberID;
 

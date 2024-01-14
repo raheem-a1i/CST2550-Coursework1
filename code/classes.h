@@ -16,6 +16,7 @@ struct Date
 };
 
 class Book;
+class Member;
 
 class Person
 {
@@ -55,125 +56,6 @@ public:
     std::string getEmail()
     {
         return Email;
-    }
-};
-
-class Librarian : public Person
-{
-private:
-    int StaffId;
-    int Salary;
-
-    Date today;
-    std::vector<Member *> members;
-
-public:
-    Librarian() {}
-
-    Librarian(int staffid, int salary, std::string name, std::string address, std::string email, int day, int mon, int year) : Person(name, address, email){
-        StaffId = staffid;
-        Salary = salary;
-
-        today = {day,mon,year};
-    }
-
-    Member *addMember(int m, std::string n, std::string addr, std::string mail){
-        Member *newMember = new Member(m, n, addr, mail);
-        members.push_back(newMember);
-        return newMember;
-    }
-    std::vector<Member*>& getMembers() {
-        return members;
-    }
-    void issueBook(Member &x,  Book &b){
-        if (b.getissue()){
-            std::cout << "Book already issued";
-            return;
-        }
-        x.setBooksBorrowed(b);
-        Date temp = {today.day + 3, today.month, today.year};
-        b.borrowBook(temp);
-        // setting due date for 3 days later
-        // not working
-    }
-    void returnBook(Member &x, Book b){
-        x.removeBookBorrowed(b);
-        b.returnBook();
-    }
-    void displayBorrowedBook(Member &x){
-        std::cout << "Displaying Books for " << x.getName()<<": \n";
-        x.displayBooks();
-    }
-    //could not get to work
-    void calcFine(Member x)
-    {
-        int fine;
-        std::vector<Book> bks;
-        bks = x.getBooksBorrowed();
-        Date dueDate;
-
-        std::cout << "\nThe Total Fine for " << x.getName() << " is: " << fine << "\n";
-    }
-    void setstaffid(int staffid){
-        StaffId = staffid;
-    }
-    int getstaffid(){
-        return StaffId;
-    }
-    void setsalary(int salary){
-        Salary = salary;
-    }
-    int getsalary(){
-        return Salary;
-    }
-};
-
-class Member : public Person
-{
-private:
-    int memberID;
-    std::vector<Book> booksloaned;
-
-public:
-    Member(int memberid, std::string name, std::string address, std::string email) : Person(name, address, email){
-        memberID = memberid;
-    }
-
-    int getMemberID(){
-        return memberID;
-    }
-
-    void setMemberID(int mid){
-        memberID = mid;
-    }
-
-    std::vector<Book> getBooksBorrowed(){
-        return booksloaned;
-    }
-
-    void setBooksBorrowed(Book &b){
-        booksloaned.push_back(b);
-    }
-
-    void removeBookBorrowed(Book &b){
-        auto iter = find(booksloaned.begin(), booksloaned.end(), b);
-        if (iter != booksloaned.end()){
-            booksloaned.erase(iter);
-            std::cout << "Book removed from the Issued: " << b.getbookName() << "\n";
-        }
-        else{
-            std::cout << "Book not found in the Issued: " << b.getbookName() << "\n";
-        }
-    }
-
-    void displayBooks(){
-        for (int i = 0; i < booksloaned.size(); ++i){
-            std::cout << "Book ID: " << booksloaned[i].getbookID();
-            std::cout << "Book Name: " << booksloaned[i].getbookName();
-            std::cout << "Page Count: " << booksloaned[i].getPageCount();
-            std::cout << "Author: " << booksloaned[i].getauthorFirstName() << " " << booksloaned[i].getauthorLastName();
-            std::cout << "Book Type: " << booksloaned[i].getbookType() << "\n";
-        }
     }
 };
 
@@ -274,10 +156,6 @@ public:
         return bookID == other.bookID;
     }
 
-    void setDueDate(Date newDueDate){
-        dueDate = newDueDate;
-    }
-
     void returnBook(){
         //clearing the duedate
         dueDate = {0, 0, 0};
@@ -297,6 +175,125 @@ public:
     void borrowBook(Date y){
         dueDate = y;
         setissue();
+    }
+};
+
+class Member : public Person
+{
+private:
+    int memberID;
+    std::vector<Book> booksloaned;
+
+public:
+    Member(int memberid, std::string name, std::string address, std::string email) : Person(name, address, email){
+        memberID = memberid;
+    }
+
+    int getMemberID(){
+        return memberID;
+    }
+
+    void setMemberID(int mid){
+        memberID = mid;
+    }
+
+    std::vector<Book> getBooksBorrowed(){
+        return booksloaned;
+    }
+
+    void setBooksBorrowed(Book &b){
+        booksloaned.push_back(b);
+    }
+
+    void removeBookBorrowed(Book &b){
+        auto iter = find(booksloaned.begin(), booksloaned.end(), b);
+        if (iter != booksloaned.end()){
+            booksloaned.erase(iter);
+            std::cout << "Book removed from the Issued: " << b.getbookName() << "\n";
+        }
+        else{
+            std::cout << "Book not found in the Issued: " << b.getbookName() << "\n";
+        }
+    }
+
+    void displayBooks(){
+        for (int i = 0; i < booksloaned.size(); ++i){
+            std::cout << "Book ID: " << booksloaned[i].getbookID() << "\n";
+            std::cout << "Book Name: " << booksloaned[i].getbookName() << "\n";
+            std::cout << "Page Count: " << booksloaned[i].getPageCount() << "\n";
+            std::cout << "Author: " << booksloaned[i].getauthorFirstName() << " " << booksloaned[i].getauthorLastName() << "\n";
+            std::cout << "Book Type: " << booksloaned[i].getbookType() << "\n";
+        }
+    }
+};
+
+class Librarian : public Person
+{
+private:
+    int StaffId;
+    int Salary;
+
+    Date today;
+    std::vector<Member *> members;
+
+public:
+    Librarian() {}
+
+    Librarian(int staffid, int salary, std::string name, std::string address, std::string email, int day, int mon, int year) : Person(name, address, email){
+        StaffId = staffid;
+        Salary = salary;
+
+        today = {day,mon,year};
+    }
+
+    Member *addMember(int m, std::string name, std::string address, std::string email){
+        Member *newMember = new Member(m, name, address, email);
+        members.push_back(newMember);
+        return newMember;
+    }
+    std::vector<Member*>& getMembers() {
+        return members;
+    }
+    void issueBook(Member &x,  Book &b){
+        if (b.getissue()){
+            std::cout << "Book already issued";
+            return;
+        }
+        x.setBooksBorrowed(b);
+        Date temp = {today.day + 3, today.month, today.year};
+        b.borrowBook(temp);
+        // setting due date for 3 days later
+        // not working
+    }
+    void returnBook(Member &x, Book b){
+        x.removeBookBorrowed(b);
+        b.returnBook();
+    }
+    void displayBorrowedBook(Member &x){
+        std::cout << "Displaying Books for " << x.getName()<<": \n";
+        x.displayBooks();
+    }
+    //could not get to work
+    void calcFine(Member x)
+    {
+        int fine;
+        std::vector<Book> bks;
+        bks = x.getBooksBorrowed();
+        Date dueDate;
+
+        std::cout << "\nThe Total Fine for " << x.getName() << " is: " << fine << "\n";
+    }
+    void setstaffid(int staffid){
+        StaffId = staffid;
+    }
+    int getstaffid(){
+        return StaffId;
+    }
+    void setsalary(int salary){
+        Salary = salary;
+    }
+    int getsalary(){
+        return Salary;
     }
 };
 
