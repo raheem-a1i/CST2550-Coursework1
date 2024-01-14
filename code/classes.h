@@ -64,47 +64,66 @@ private:
     int StaffId;
     int Salary;
 
+    Date today;
+    std::vector<Member *> members;
+
 public:
     Librarian() {}
 
-    Librarian(int StaffId, std::string Name, std::string Address, std::string Email, int Salary)
-    {
-        setName(Name);
-        setAddress(Address);
-        setEmail(Email);
-        this->StaffId = StaffId;
-        this->Salary = Salary;
+    Librarian(int staffid, int salary, std::string name, std::string address, std::string email, int day, int mon, int year) : Person(name, address, email){
+        StaffId = staffid;
+        Salary = salary;
+
+        today = {day,mon,year};
     }
 
-    void addMenber()
-    {
+    Member *addMember(int m, std::string n, std::string addr, std::string mail){
+        Member *newMember = new Member(m, n, addr, mail);
+        members.push_back(newMember);
+        return newMember;
     }
-    void issueBook(int memberID, int bookID)
-    {
+    std::vector<Member*>& getMembers() {
+        return members;
     }
-    void returnBook(int memberID, int bookID)
-    {
+    void issueBook(Member &x,  Book &b){
+        if (b.getissue()){
+            std::cout << "Book already issued";
+            return;
+        }
+        x.setBooksBorrowed(b);
+        Date temp = {today.day + 3, today.month, today.year};
+        b.borrowBook(temp);
+        // setting due date for 3 days later
+        // not working
     }
-    void displayBorrowedBook(int memberID)
-    {
+    void returnBook(Member &x, Book b){
+        x.removeBookBorrowed(b);
+        b.returnBook();
     }
-    void calcFine(int memberID)
-    {
+    void displayBorrowedBook(Member &x){
+        std::cout << "Displaying Books for " << x.getName()<<": \n";
+        x.displayBooks();
     }
-    void setstaffid(int staffid)
+    //could not get to work
+    void calcFine(Member x)
     {
+        int fine;
+        std::vector<Book> bks;
+        bks = x.getBooksBorrowed();
+        Date dueDate;
+
+        std::cout << "\nThe Total Fine for " << x.getName() << " is: " << fine << "\n";
+    }
+    void setstaffid(int staffid){
         StaffId = staffid;
     }
-    int getstaffid()
-    {
+    int getstaffid(){
         return StaffId;
     }
-    void setsalary(int salary)
-    {
+    void setsalary(int salary){
         Salary = salary;
     }
-    int getsalary()
-    {
+    int getsalary(){
         return Salary;
     }
 };
@@ -116,28 +135,23 @@ private:
     std::vector<Book> booksloaned;
 
 public:
-    Member(int memberid, std::string name, std::string address, std::string email) : Person(name, address, email)
-    {
+    Member(int memberid, std::string name, std::string address, std::string email) : Person(name, address, email){
         memberID = memberid;
     }
 
-    int getMemberID()
-    {
+    int getMemberID(){
         return memberID;
     }
 
-    void setMemberID(int mid)
-    {
+    void setMemberID(int mid){
         memberID = mid;
     }
 
-    std::vector<Book> getBooksBorrowed()
-    {
+    std::vector<Book> getBooksBorrowed(){
         return booksloaned;
     }
 
-    void setBooksBorrowed(Book &b)
-    {
+    void setBooksBorrowed(Book &b){
         booksloaned.push_back(b);
     }
 
@@ -149,6 +163,16 @@ public:
         }
         else{
             std::cout << "Book not found in the Issued: " << b.getbookName() << "\n";
+        }
+    }
+
+    void displayBooks(){
+        for (int i = 0; i < booksloaned.size(); ++i){
+            std::cout << "Book ID: " << booksloaned[i].getbookID();
+            std::cout << "Book Name: " << booksloaned[i].getbookName();
+            std::cout << "Page Count: " << booksloaned[i].getPageCount();
+            std::cout << "Author: " << booksloaned[i].getauthorFirstName() << " " << booksloaned[i].getauthorLastName();
+            std::cout << "Book Type: " << booksloaned[i].getbookType() << "\n";
         }
     }
 };
@@ -164,73 +188,105 @@ private:
     Date dueDate;
     Person borrower;
     std::string pageCount;
+    int issued;
 
 public:
-    Book(){}
-    Book(std::string bookid, std::string name, std::string firstName, std::string lastName, std::string booktype){
+    Book() {issued = 0;}
+    Book(std::string bookid, std::string name, std::string firstName, std::string lastName, std::string booktype, std::string page)
+    {
         bookID = bookid;
         bookName = name;
         authorFirstName = firstName;
         authorLastName = lastName;
         bookType = booktype;
+        pageCount = page;
     }
 
-    std::string getbookID(){
+    std::string getbookID()
+    {
         return bookID;
     }
 
-    std::string getbookName(){
+    std::string getbookName()
+    {
         return bookName;
     }
 
-    std::string getauthorFirstName(){
+    std::string getauthorFirstName()
+    {
         return authorFirstName;
     }
 
-    std::string getauthorLastName(){
+    std::string getauthorLastName()
+    {
         return authorLastName;
     }
 
-    std::string getPageCount(){
+    std::string getPageCount()
+    {
         return pageCount;
     }
 
-    void setBookID(std::string bookid) { 
-        bookID = bookid; }
-    void setBookName(std::string name) { 
-        bookName = name; }
-    void setPageCount(std::string pages) { 
-        pageCount = pages; }
-    void setAuthorFirstName(std::string firstName) { 
-        authorFirstName = firstName; }
-    void setAuthorLastName(std::string lastName) { 
-        authorLastName = lastName; }
-    void setBookType(std::string type) { 
-        bookType = type; }
+    std::string getbookType(){
+        return bookType;
+    }
 
-    Date getDueDate()
-    {
+    void setBookID(std::string bookid){
+        bookID = bookid;
+    }
+    void setBookName(std::string name){
+        bookName = name;
+    }
+    void setPageCount(std::string pages){
+        pageCount = pages;
+    }
+    void setAuthorFirstName(std::string firstName){
+        authorFirstName = firstName;
+    }
+    void setAuthorLastName(std::string lastName){
+        authorLastName = lastName;
+    }
+    void setBookType(std::string type){
+        bookType = type;
+    }
+
+    void setissue(){
+        if(issued){
+            issued = 0;
+        }else{
+            issued = 1;
+        }
+    }
+
+    int getissue(){
+        return issued;
+    }
+
+    void setDueDate(Date d){
+        dueDate = d;
+    }
+
+    Date getDueDate(){
         return dueDate;
     }
 
-    bool operator==(const Book &other) const
-    {
+    bool operator==(const Book &other) const{
         return bookID == other.bookID;
     }
 
-    void setDueDate(Date newDueDate)
-    {
+    void setDueDate(Date newDueDate){
         dueDate = newDueDate;
     }
 
-    void returnBook()
-    {
+    void returnBook(){
+        //clearing the duedate
         dueDate = {0, 0, 0};
 
         if (!borrower.getName().empty())
         {
             std::cout << "Book returned by " << borrower.getName() << "\n";
             borrower.setName("");
+            setissue();
         }
         else
         {
@@ -238,38 +294,40 @@ public:
         }
     }
 
-    void borrowBook(Date y)
-    {
+    void borrowBook(Date y){
         dueDate = y;
+        setissue();
     }
 };
 
-void readbks(const std::string& filename, std::vector<Book>& books) {
-    
+//read the csv file
+//get the postion of each header. 
+void readbks(const std::string &filename, std::vector<Book> &books){
+
     std::ifstream file(filename);
 
-    if (!file.is_open()) {
+    if (!file.is_open()){
         std::cerr << "Error opening file: " << filename << std::endl;
         return;
     }
 
     std::string line;
-    
-    while (getline(file, line)) {
+
+    while (getline(file, line)){
         size_t pos = 0;
         size_t start = 0;
         std::vector<std::string> fields;
         bool flg = false;
-        
-        while (pos < line.length()) {
-            
-            if (line[pos] == '"') {
-                flg = !flg;  // Toggling the flag so that when first speech mark is spotted flag turns on and turns off when final speech mark is seen
+
+        while (pos < line.length()){
+
+            if (line[pos] == '"'){
+                flg = !flg; 
                 pos++;
                 continue;
             }
 
-            if (!flg && line[pos] == ',') {
+            if (!flg && line[pos] == ','){
                 fields.push_back(line.substr(start, pos - start));
                 start = pos + 1;
             }
@@ -279,19 +337,19 @@ void readbks(const std::string& filename, std::vector<Book>& books) {
 
         fields.push_back(line.substr(start));
 
-        if (fields.size() == 6) {
+        if (fields.size() == 6){
             Book book;
-            book.setBookID (fields[0]);
+            book.setBookID(fields[0]);
             book.setBookName(fields[1]);
             book.setPageCount(fields[2]);
-            book.setAuthorFirstName (fields[3]);
+            book.setAuthorFirstName(fields[3]);
             book.setAuthorLastName(fields[4]);
-            book.setBookType (fields[5]);
+            book.setBookType(fields[5]);
 
             books.push_back(book);
         }
     }
-    
+
     file.close();
 }
 
